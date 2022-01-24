@@ -23,7 +23,7 @@ object MinTemperaturesDataset {
       .master("local[*]")
       .getOrCreate()
 
-    val temperatureSchema = new StructType()
+    val temperatureSchema = new StructType() // sameType and same Name to case Class
       .add("stationID", StringType, nullable = true)
       .add("date", IntegerType, nullable = true)
       .add("measure_type", StringType, nullable = true)
@@ -32,7 +32,7 @@ object MinTemperaturesDataset {
     // Read the file as dataset
     import spark.implicits._
     val ds = spark.read
-      .schema(temperatureSchema)
+      .schema(temperatureSchema) // let Dataset know header -> more optimizaion
       .csv("data/1800.csv")
       .as[Temperature]
     
